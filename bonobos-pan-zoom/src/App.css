@@ -32,6 +32,7 @@
 }
 
 .image-container {
+  background-color: #fafafa;
   height: 100%;
   width: 100%;
 }
@@ -46,4 +47,37 @@
   max-height: 100vh;
   height: 100%;
   width: auto;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40px;
+  right: 40px;
+}
+
+.control {
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.control:first-of-type {
+  margin-bottom: 30px;
+}
+
+.image-zoom--in {
+  background-image: url('./zoom-in.svg');
+  width: 25px;
+  height: 25px;
+  display: flex;
+}
+
+.image-zoom--out {
+  background-image: url('./zoom-out.svg');
+  width: 25px;
+  height: 25px;
+  display: flex;
 }
