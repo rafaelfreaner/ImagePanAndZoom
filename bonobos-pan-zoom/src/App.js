@@ -22,10 +22,14 @@ class ImagePanAndZoom extends Component {
       zoomed: false
     };
 
-    this.zoomIn = this.zoomIn.bind(this);
-    this.zoomOut = this.zoomOut.bind(this);
+    this.toggleZoom = this.toggleZoom.bind(this);
   }
 
+  toggleZoom() {
+    this.setState({
+      zoomed: !this.state.zoomed
+    });
+  }
 
   /**
    * Returns responsive image with different image sources
@@ -34,24 +38,10 @@ class ImagePanAndZoom extends Component {
    */
   generateResponsiveImage() {
     return (
-      <picture className="responsive-image">
+      <picture onClick={this.toggleZoom} className={`responsive-image ${this.state.zoomed ? 'zoomed-in' : ''}`}>
         <img src={small} srcSet={`${small} 320w, ${medium} 768w, ${large} 1280w`} />
       </picture>
     )
-  }
-
-  zoomIn() {
-    this.setState({
-      zoomed: true
-    });
-  }
-
-  zoomOut() {
-    if (this.state.zoomed) {
-      this.setState({
-        zoomed: !this.state.zoomed
-      });
-    }
   }
 
   /**
@@ -62,10 +52,10 @@ class ImagePanAndZoom extends Component {
   renderControls() {
     return (
       <div className="controls">
-        <button onClick={this.zoomIn}className="control">
+        <button onClick={this.toggleZoom} className={`control ${this.state.zoomed ? 'disabled' : ''}`}>
           <i className="image-zoom--in"/>
         </button>
-        <button  onClick={this.zoomOut} className="control">
+        <button  onClick={this.toggleZoom} className={`control ${!this.state.zoomed ? 'disabled' : ''}`}>
          <i className="image-zoom--out"/>
         </button>
       </div>
