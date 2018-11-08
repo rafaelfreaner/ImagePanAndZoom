@@ -8,12 +8,18 @@
   align-items: center;
   display: flex;
   justify-content: center;
+  user-select: none;
+  touch-action: none;
+  -webkit-user-drag: none;
 }
 
 .responsive-image img {
   max-height: 100vh;
   height: 100%;
   width: auto;
+  user-select: none;
+  touch-action: none;
+  -webkit-user-drag: none;
 }
 
 .controls {
@@ -60,6 +66,5 @@
 }
 
 .responsive-image.zoomed-in {
-  transform: scale(3);
-  cursor: zoom-out;
+  cursor: grab;
 }

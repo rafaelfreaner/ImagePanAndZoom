@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import zoomIn from './zoom-in.svg';
-import zoomOut from './zoom-out.svg';
 import './App.css';
 
 const small = 'https://bonobos-prod-s3.imgix.net/products/18158/original/SHIRT_ShortSleeve_ZebraRun_JetBlack_hero1.jpg?h=768&w=768';
@@ -17,18 +14,79 @@ const large = 'https://bonobos-prod-s3.imgix.net/products/18158/original/SHIRT_S
 class ImagePanAndZoom extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      zoomed: false
+    this.panning = false;
+    this.coordinates = {
+      x: 0,
+      y: 0,
     };
 
+    this.state = {
+      zoomed: false,
+      x: 0,
+      y: 0
+    }
+
     this.toggleZoom = this.toggleZoom.bind(this);
+    this.handleMouseDown = this.handleMouseDown.bind(this);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
   }
 
-  toggleZoom() {
+  componentDidMount() {
+    document.addEventListener('mousemove', this.handlePan.bind(this), false);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('mousemove', this.handlePan, false);
+  }
+
+  toggleZoom(e) {
+    if (this.state.zoomed && e.target.localName === 'img') {
+      return;
+    }
+
     this.setState({
-      zoomed: !this.state.zoomed
+      zoomed: !this.state.zoomed,
+      x: 0,
+      y: 0
     });
+
+  }
+
+  handleMouseDown(e) {
+    this.panning = true;
+    this.coordinates = {
+      x: e.pageX,
+      y: e.pageY
+    };
+  }
+
+  handleMouseUp(e) {
+    this.panning = false;
+    this.coordinates = {
+      x: 0,
+      y: 0
+    };
+  }
+
+  handlePan(e) {
+    e.preventDefault();
+    if (this.state.zoomed && this.panning) {
+      // Get difference between coordinates and new location of page
+      const xDiff = this.coordinates.x - e.pageX
+      const yDiff = this.coordinates.y - e.pageY;
+
+      // Update our coordinates
+      this.coordinates.x = e.pageX;
+      this.coordinates.y = e.pageY;
+
+      this.setState({
+        x: this.state.x - xDiff,
+        y: this.state.y - yDiff,
+        zoomed: this.state.zoomed
+      });
+    }
+
+    return;
   }
 
   /**
@@ -38,8 +96,18 @@ class ImagePanAndZoom extends Component {
    */
   generateResponsiveImage() {
     return (
-      <picture onClick={this.toggleZoom} className={`responsive-image ${this.state.zoomed ? 'zoomed-in' : ''}`}>
-        <img src={small} srcSet={`${small} 320w, ${medium} 768w, ${large} 1280w`} />
+      <picture
+        className={`responsive-image ${this.state.zoomed ? 'zoomed-in' : ''}`}
+        >
+        <img
+          onMouseDown={this.handleMouseDown}
+          onMouseUp={this.handleMouseUp}
+          onClick={this.toggleZoom}
+          draggable="false"
+          src={small}
+          srcSet={`${small} 320w, ${medium} 768w, ${large} 1280w`}
+          style={{transform: `matrix(${this.state.zoomed ? 3 : 1}, 0, 0, ${this.state.zoomed ? 3 : 1}, ${this.state.x}, ${this.state.y})`}}
+          />
       </picture>
     )
   }
