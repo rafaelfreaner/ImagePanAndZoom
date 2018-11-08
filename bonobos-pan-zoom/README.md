@@ -23,6 +23,7 @@ Due to time restrictions, I wasn't able to fix the event logic to avoid triggeri
 
 Fix issue with triggering zoom out when dragging an image.
 Fix issue with image not being position at the top of the page when dragged.
+Add tests
 
 ## Component Usage
 
