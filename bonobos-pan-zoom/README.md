@@ -1,44 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
+title: ImagePanAndZoom
+---
 
-## Available Scripts
+A component used to display a responsive image. When a user clicks on the image, we zoom in 3x the image. When a user clicks on the zoom out button, the image will zoom out. The user can drag the image in any direction within its container.
 
-In the project directory, you can run:
+## Build Instructions
+npm i
+npm start
 
-### `npm start`
+## Approach
+I decided to create a simple React application for the ImagePanAndZoom component.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+This component includes a responsive image, with three different asset sources for different viewports.
+I have listeners on the image for `mouseUp` and `mouseDown` events, as well document listeners for `mouseMove` events, this way we can tell if the user is currently `panning` or dragging an image. If the user is dragging an image, we can check for event proprties, `pageX` and `pageY`, and update our initial coordinates so we can then apply CSS that will position the image in the right location. 
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Zooming: When a user clicks on the zoom in button, we scale the image 3x the initial image size. When you click on the zoom out button, it should scale the image back to its original size (1x). When a user clicks on the image, that will also trigger the zoom in effect.
 
-### `npm test`
+Due to time restrictions, I wasn't able to fix the event logic to avoid triggering a zoom out when dragging the image. 
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Future Improvements
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Fix issue with triggering zoom out when dragging an image.
+Fix issue with image not being position at the top of the page when dragged.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Component Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+const ImagePanAndZoom = require('./App.js');
 
-### `npm run eject`
+<ImagePanAndZoom
+/>;
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Style Classes
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Here is the ImagePanAndZoom's public API for class names:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```scss
+.image-container
+  .responsive-image
+    img
+  .controls
+    .control
+      .image-zoom--in
+    .control
+      .image-zoom--out
+```

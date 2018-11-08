@@ -125,6 +125,7 @@ class ImagePanAndZoom extends Component {
           onClick={this.toggleZoom}
           draggable="false"
           src={small}
+          alt="Shirt"
           srcSet={`${small} 320w, ${medium} 768w, ${large} 1280w`}
           style={{transform: `matrix(${this.state.zoomed ? 3 : 1}, 0, 0, ${this.state.zoomed ? 3 : 1}, ${this.state.x}, ${this.state.y})`}}
           />
