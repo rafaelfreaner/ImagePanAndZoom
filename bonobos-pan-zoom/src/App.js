@@ -39,6 +39,11 @@ class ImagePanAndZoom extends Component {
     document.addEventListener('mousemove', this.handlePan, false);
   }
 
+  /**
+   * Toggle Zoom
+   *
+   * @returns {undefined} undefined
+   */
   toggleZoom(e) {
     if (this.state.zoomed && e.target.localName === 'img') {
       return;
@@ -52,6 +57,11 @@ class ImagePanAndZoom extends Component {
 
   }
 
+  /**
+   * Handles MouseDown Event
+   *
+   * @returns {undefined} undefined
+   */
   handleMouseDown(e) {
     this.panning = true;
     this.coordinates = {
@@ -60,6 +70,11 @@ class ImagePanAndZoom extends Component {
     };
   }
 
+  /**
+   * Handles MouseUp Event
+   *
+   * @returns {undefined} undefined
+   */
   handleMouseUp(e) {
     this.panning = false;
     this.coordinates = {
@@ -68,6 +83,11 @@ class ImagePanAndZoom extends Component {
     };
   }
 
+  /**
+   * Handles MouseMove event
+   *
+   * @returns {undefined} undefined
+   */
   handlePan(e) {
     e.preventDefault();
     if (this.state.zoomed && this.panning) {

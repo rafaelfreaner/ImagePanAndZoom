@@ -11,6 +11,9 @@
   user-select: none;
   touch-action: none;
   -webkit-user-drag: none;
+  transition: transform .3s ease-in-out 0s;
+  transform-origin: 50% 50% 0;
+  cursor: zoom-in;
 }
 
 .responsive-image img {
@@ -20,6 +23,10 @@
   user-select: none;
   touch-action: none;
   -webkit-user-drag: none;
+}
+
+.responsive-image.zoomed-in {
+  cursor: grab;
 }
 
 .controls {
@@ -57,14 +64,4 @@
 
 .disabled i {
   opacity: .35;
-}
-
-.responsive-image {
-  transition: transform .3s ease-in-out 0s;
-  transform-origin: 50% 50% 0;
-  cursor: zoom-in;
-}
-
-.responsive-image.zoomed-in {
-  cursor: grab;
 }
